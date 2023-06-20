@@ -6,9 +6,9 @@ public class User {
     private String name;
     private String password;
     private String email;
-    private Enum<UserType> userType;
+    private UserType userType;
 
-    public User(long id, String name, String password, String email, Enum<UserType> userType) {
+    public User(long id, String name, String password, String email, UserType userType) {
         this.id = id;
         this.name = name;
         this.password = password;
@@ -43,11 +43,11 @@ public class User {
         this.email = email;
     }
 
-    public Enum<UserType> getUserType() {
+    public UserType getUserType() {
         return userType;
     }
 
-    public void setUserType(Enum<UserType> userType) {
+    public void setUserType(UserType userType) {
         this.userType = userType;
     }
 
