@@ -1,7 +1,8 @@
 package com.shopping_cli.server.controller;
 
 import com.shopping_cli.server.model.User;
-import com.shopping_cli.server.repository.UserCollectionRepository;
+import com.shopping_cli.server.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -12,45 +13,42 @@ import java.util.List;
 @RequestMapping("/api/users")
 @CrossOrigin
 public class UserController {
-    private final UserCollectionRepository repository;
-
-    public UserController(UserCollectionRepository repository) {
-        this.repository = repository;
-    }
+    @Autowired
+    private UserService userService;
 
     @GetMapping("")
-    public List<User> getAllUsers() {
-        return repository.findAll();
+    public List<User> getAllUsers(){
+        return userService.findAll();
     }
 
     @GetMapping("/{id}")
-    public User getUserById(@PathVariable long id){
-        return repository.findById(id)
+    public User getUserById(@PathVariable int id){
+        return userService.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,  "User not found!"));
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("")
     public void createUser(@RequestBody User user){
-        repository.save(user);
+        userService.save(user);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/{id}")
-    public void updateUser(@PathVariable long id, @RequestBody User user) {
-        if (!repository.existsById(id))
+    public void updateUser(@PathVariable int id, @RequestBody User user) {
+        if (!userService.existsById(id))
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found!");
         else
-            repository.save(user);
+            userService.save(user);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
-    public void deleteUser(@PathVariable long id) {
-        if (!repository.existsById(id))
+    public void deleteUser(@PathVariable int id) {
+        if (!userService.existsById(id))
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found!");
         else
-            repository.deleteById(id);
+            userService.deleteById(id);
     }
 
 

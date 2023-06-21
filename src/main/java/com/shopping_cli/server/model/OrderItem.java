@@ -1,33 +1,45 @@
 package com.shopping_cli.server.model;
 
-public class OrderItem {
-    private final long id;
-    private final long orderId;
-    private final long productId;
-    private final long quantity;
-    private final double itemAmount;
+import jakarta.persistence.*;
 
-    public OrderItem(long id, long orderId, long productId, long quantity, double itemAmount) {
-        this.id = id;
-        this.orderId = orderId;
-        this.productId = productId;
+@Entity
+@Table(name = "order_items")
+public class OrderItem {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "order_item_id", nullable = false, updatable = false)
+    private int id;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "order_id", nullable = false)
+    private Order order;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id", nullable = false)
+    private Product product;
+    @Column(name = "quantity", nullable = false)
+    private int quantity;
+    @Column(name = "item_amount", nullable = false)
+    private double itemAmount;
+
+    public OrderItem(Order order, Product product, int quantity, double itemAmount) {
+        this.order = order;
+        this.product = product;
         this.quantity = quantity;
         this.itemAmount = itemAmount;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public long getOrderId() {
-        return orderId;
+    public int getOrderId() {
+        return order.getId();
     }
 
-    public long getProductId() {
-        return productId;
+    public int getProductId() {
+        return product.getId();
     }
 
-    public long getQuantity() {
+    public int getQuantity() {
         return quantity;
     }
 
@@ -39,8 +51,8 @@ public class OrderItem {
     public String toString() {
         return "OrderItem{" +
                 "id=" + id +
-                ", orderId=" + orderId +
-                ", productId=" + productId +
+                ", orderId=" + order.getId() +
+                ", productId=" + product.getId() +
                 ", quantity=" + quantity +
                 ", itemAmount=" + itemAmount +
                 '}';

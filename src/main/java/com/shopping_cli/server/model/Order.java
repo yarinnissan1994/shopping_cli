@@ -1,26 +1,38 @@
 package com.shopping_cli.server.model;
 
+import jakarta.persistence.*;
+
 import java.util.Date;
 
+@Entity
+@Table(name = "orders")
 public class Order {
-    private final long id;
-    private final long userId;
-    private final Date orderDate;
-    private final double totalAmount;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "order_id", nullable = false, updatable = false)
+    private int id;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+    @Column(name = "order_date", nullable = false)
+    private Date orderDate;
+    @Column(name = "total_amount", nullable = false)
+    private double totalAmount;
 
-    public Order(long id, long userId, Date orderDate, double totalAmount) {
-        this.id = id;
-        this.userId = userId;
+    public Order() {}
+
+    public Order(User user, Date orderDate, double totalAmount) {
+        this.user = user;
         this.orderDate = orderDate;
         this.totalAmount = totalAmount;
     }
 
-    public long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public long getUserId() {
-        return userId;
+    public Integer getUserId() {
+        return user.getId();
     }
 
     public Date getOrderDate() {
@@ -35,7 +47,7 @@ public class Order {
     public String toString() {
         return "Order{" +
                 "id=" + id +
-                ", userId=" + userId +
+                ", userId=" + user.getId() +
                 ", orderDate=" + orderDate +
                 ", totalAmount=" + totalAmount +
                 '}';

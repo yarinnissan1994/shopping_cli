@@ -1,21 +1,33 @@
 package com.shopping_cli.server.model;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "users")
 public class User {
-
-    private final long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id", nullable = false, updatable = false)
+    private int id;
+    @Column(name = "user_name", nullable = false)
     private String name;
+    @Column(name = "password", nullable = false)
     private String password;
+    @Column(name = "email", nullable = false)
     private String email;
-    private UserType userType;
+    @Column(name = "user_type", nullable = false)
+    private Enum<UserType> userType;
 
-    public User(long id, String name, String password, String email, UserType userType) {
-        this.id = id;
+    public User() {};
+
+    public User(String name, String password, String email, UserType userType) {
         this.name = name;
         this.password = password;
         this.email = email;
         this.userType = userType;
     }
-    public long getId() {
+
+    public int getId() {
         return id;
     }
 
@@ -23,32 +35,16 @@ public class User {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getPassword() {
         return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public UserType getUserType() {
+    public Enum<UserType> getUserType() {
         return userType;
-    }
-
-    public void setUserType(UserType userType) {
-        this.userType = userType;
     }
 
     @Override
