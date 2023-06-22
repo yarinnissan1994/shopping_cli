@@ -20,6 +20,8 @@ public class OrderItem {
     @Column(name = "item_amount", nullable = false)
     private double itemAmount;
 
+    public OrderItem() {}
+
     public OrderItem(Order order, Product product, int quantity, double itemAmount) {
         this.order = order;
         this.product = product;
@@ -47,6 +49,14 @@ public class OrderItem {
         return itemAmount;
     }
 
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
     @Override
     public String toString() {
         return "OrderItem{" +
@@ -57,4 +67,5 @@ public class OrderItem {
                 ", itemAmount=" + itemAmount +
                 '}';
     }
+
 }

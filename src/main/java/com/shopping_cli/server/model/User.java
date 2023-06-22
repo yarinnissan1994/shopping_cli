@@ -16,7 +16,7 @@ public class User {
     @Column(name = "email", nullable = false)
     private String email;
     @Column(name = "user_type", nullable = false)
-    private Enum<UserType> userType;
+    private UserType userType;
 
     public User() {};
 
@@ -43,7 +43,7 @@ public class User {
         return email;
     }
 
-    public Enum<UserType> getUserType() {
+    public UserType getUserType() {
         return userType;
     }
 
