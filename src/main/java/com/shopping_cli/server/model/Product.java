@@ -13,6 +13,9 @@ public class Product {
     private String name;
     @Column(name = "description")
     private String description;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id", nullable = false)
+    private Category category;
     @Column(name = "price", nullable = false)
     private double price;
     @Column(name = "quantity", nullable = false)
@@ -20,9 +23,10 @@ public class Product {
 
     public Product() {}
 
-    public Product(String name, String description, double price, int quantity) {
+    public Product(String name, String description, Category category, double price, int quantity) {
         this.name = name;
         this.description = description;
+        this.category = category;
         this.price = price;
         this.quantity = quantity;
     }
@@ -39,12 +43,19 @@ public class Product {
         return description;
     }
 
+    public int getCategoryId() {
+        return category.getId();
+    }
     public double getPrice() {
         return price;
     }
 
     public int getQuantity() {
         return quantity;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     @Override
@@ -57,4 +68,5 @@ public class Product {
                 ", quantity=" + quantity +
                 '}';
     }
+
 }
