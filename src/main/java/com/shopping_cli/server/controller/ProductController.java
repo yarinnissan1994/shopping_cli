@@ -1,6 +1,9 @@
 package com.shopping_cli.server.controller;
 
+import com.shopping_cli.server.model.Category;
 import com.shopping_cli.server.model.Product;
+import com.shopping_cli.server.model.User;
+import com.shopping_cli.server.service.CategoryService;
 import com.shopping_cli.server.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/products")
@@ -15,6 +19,9 @@ import java.util.List;
 public class ProductController {
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private CategoryService categoryService;
 
     @GetMapping("")
     public List<Product> getAllProducts(){
@@ -30,6 +37,10 @@ public class ProductController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("")
     public void createProduct(@RequestBody Product product){
+        Optional<Category> category = categoryService.findById(product.getCategoryId());
+        if (!category.isPresent())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found!");
+        product.setCategory(category.get());
         productService.save(product);
     }
 
