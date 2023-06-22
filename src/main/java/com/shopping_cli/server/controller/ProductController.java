@@ -1,7 +1,6 @@
 package com.shopping_cli.server.controller;
 
 import com.shopping_cli.server.model.Product;
-import com.shopping_cli.server.model.User;
 import com.shopping_cli.server.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,7 +10,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/Products")
+@RequestMapping("/api/products")
 @CrossOrigin
 public class ProductController {
     @Autowired

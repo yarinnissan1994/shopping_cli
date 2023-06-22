@@ -1,14 +1,16 @@
 package com.shopping_cli.server.controller;
 
 import com.shopping_cli.server.model.Order;
-import com.shopping_cli.server.model.Product;
+import com.shopping_cli.server.model.User;
 import com.shopping_cli.server.service.OrderService;
+import com.shopping_cli.server.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/orders")
@@ -16,6 +18,9 @@ import java.util.List;
 public class OrderController {
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private UserService userService;
 
     @GetMapping("")
     public List<Order> getAllOrders(){
@@ -31,6 +36,10 @@ public class OrderController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("")
     public void createOrder(@RequestBody Order order){
+        Optional<User> user = userService.findById(order.getUserId());
+        if (!user.isPresent())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found!");
+        order.setUser(user.get());
         orderService.save(order);
     }
 

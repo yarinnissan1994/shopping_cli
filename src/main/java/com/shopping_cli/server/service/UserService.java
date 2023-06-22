@@ -1,13 +1,10 @@
 package com.shopping_cli.server.service;
 
 import com.shopping_cli.server.model.User;
-import com.shopping_cli.server.model.UserType;
 import com.shopping_cli.server.repository.UserRepository;
-import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,10 +32,4 @@ public class UserService {
     public void deleteById(int id) {
         userRepo.deleteById(id);
     }
-
-//    @PostConstruct
-//    public void init() {
-//        users.add(new User("admin", "admin", "XXXXXXXXXXXXXXX", UserType.ADMIN));
-//        users.add(new User("user", "user", "XXXXXXXXXXXXXX", UserType.CUSTOMER));
-//    }
 }
