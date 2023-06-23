@@ -17,17 +17,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up Java
-        uses: actions/setup-java@v2
-        with:
-          java-version: 20
-          distribution: 'adopt'
-          server-id: github
-          server-username: GITHUB_ACTOR
-          server-password: GITHUB_TOKEN
-          overwrite-settings: true
-          cache-dir: ~/.m2/repository
-
       - name: Build with Maven
         run: mvn package --batch-mode --no-transfer-progress
 
