@@ -24,5 +24,5 @@ jobs:
           distribution: 'temurin'
           cache: maven
           
-      - name: Build with Ant
-        run: ant build
+      - name: Build with Maven
+        run: mvn clean package --batch-mode --no-transfer-progress
