@@ -11,7 +11,7 @@ on:
 
 jobs:
   build-and-test:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
       - name: Checkout code
@@ -24,5 +24,5 @@ jobs:
           distribution: 'temurin'
           cache: maven
           
-      - name: Build with Gradle
-        run: ./gradlew build --console=plain
+      - name: Build with Ant
+        run: ant build
