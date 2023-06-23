@@ -1,0 +1,29 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch: # Allow manual triggering of the workflow
+
+jobs:
+  build-and-test:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Java
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+
+      - name: Build with Maven
+        run: mvn package --batch-mode --no-transfer-progress
+
+      - name: Run tests with Maven
+        run: mvn test --batch-mode --no-transfer-progress
