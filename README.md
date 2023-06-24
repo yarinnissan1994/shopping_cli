@@ -28,7 +28,7 @@
 ## 🧪 Running Tests
 ...
 
-## 👥 Contributions
+### 👥 Contributions
 ...
 
 ## 📄 License
