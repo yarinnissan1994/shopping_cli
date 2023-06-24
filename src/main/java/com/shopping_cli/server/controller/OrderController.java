@@ -6,6 +6,7 @@ import com.shopping_cli.server.service.OrderService;
 import com.shopping_cli.server.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -23,41 +24,79 @@ public class OrderController {
     private UserService userService;
 
     @GetMapping("")
-    public List<Order> getAllOrders(){
-        return orderService.findAll();
+    public ResponseEntity<List<Order>> getAllOrders() {
+        try {
+            List<Order> orders = orderService.findAll();
+            return ResponseEntity.ok(orders);
+        } catch (Exception e) {
+            System.out.println("Error occurred while retrieving orders: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @GetMapping("/{id}")
-    public Order getOrderById(@PathVariable int id){
-        return orderService.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,  "Order not found!"));
+    public ResponseEntity<Order> getOrderById(@PathVariable int id) {
+        try {
+            Order order = orderService.findById(id)
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Order not found!"));
+            return ResponseEntity.ok(order);
+        } catch (ResponseStatusException e) {
+            throw e;
+        } catch (Exception e) {
+            System.out.println("Error occurred while retrieving order: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("")
-    public void createOrder(@RequestBody Order order){
-        Optional<User> user = userService.findById(order.getUserId());
-        if (!user.isPresent())
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found!");
-        order.setUser(user.get());
-        orderService.save(order);
+    public ResponseEntity<Void> createOrder(@RequestBody Order order) {
+        try {
+            Optional<User> user = userService.findById(order.getUserId());
+            if (!user.isPresent())
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found!");
+            order.setUser(user.get());
+            orderService.save(order);
+            return ResponseEntity.status(HttpStatus.CREATED).build();
+        } catch (Exception e) {
+            System.out.println("Error occurred while creating order: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/{id}")
-    public void updateOrder(@PathVariable int id, @RequestBody Order order) {
-        if (!orderService.existsById(id))
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Order not found!");
-        else
-            orderService.save(order);
+    public ResponseEntity<Void> updateOrder(@PathVariable int id, @RequestBody Order order) {
+        try {
+            if (!orderService.existsById(id))
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Order not found!");
+            else {
+                orderService.save(order);
+                return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+            }
+        } catch (ResponseStatusException e) {
+            throw e;
+        } catch (Exception e) {
+            System.out.println("Error occurred while updating order: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
-    public void deleteOrder(@PathVariable int id) {
-        if (!orderService.existsById(id))
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Order not found!");
-        else
-            orderService.deleteById(id);
+    public ResponseEntity<Void> deleteOrder(@PathVariable int id) {
+        try {
+            if (!orderService.existsById(id))
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Order not found!");
+            else {
+                orderService.deleteById(id);
+                return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+            }
+        } catch (ResponseStatusException e) {
+            throw e;
+        } catch (Exception e) {
+            System.out.println("Error occurred while deleting order: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 }
