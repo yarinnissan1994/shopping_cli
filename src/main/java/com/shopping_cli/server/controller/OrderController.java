@@ -29,7 +29,7 @@ public class OrderController {
             List<Order> orders = orderService.findAll();
             return ResponseEntity.ok(orders);
         } catch (Exception e) {
-            System.out.println("Error occurred while retrieving orders: " + e.getMessage());
+            System.err.println("Error occurred while retrieving orders: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
@@ -43,7 +43,7 @@ public class OrderController {
         } catch (ResponseStatusException e) {
             throw e;
         } catch (Exception e) {
-            System.out.println("Error occurred while retrieving order: " + e.getMessage());
+            System.err.println("Error occurred while retrieving order: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
@@ -59,7 +59,7 @@ public class OrderController {
             orderService.save(order);
             return ResponseEntity.status(HttpStatus.CREATED).build();
         } catch (Exception e) {
-            System.out.println("Error occurred while creating order: " + e.getMessage());
+            System.err.println("Error occurred while creating order: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
@@ -77,7 +77,7 @@ public class OrderController {
         } catch (ResponseStatusException e) {
             throw e;
         } catch (Exception e) {
-            System.out.println("Error occurred while updating order: " + e.getMessage());
+            System.err.println("Error occurred while updating order: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
@@ -95,7 +95,7 @@ public class OrderController {
         } catch (ResponseStatusException e) {
             throw e;
         } catch (Exception e) {
-            System.out.println("Error occurred while deleting order: " + e.getMessage());
+            System.err.println("Error occurred while deleting order: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }

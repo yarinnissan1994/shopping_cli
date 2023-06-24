@@ -48,7 +48,7 @@ public class OrderItemController {
         } catch (ResponseStatusException e) {
             throw e;
         } catch (Exception e) {
-            System.out.println("Error occurred while retrieving order item: " + e.getMessage());
+            System.err.println("Error occurred while retrieving order item: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
@@ -67,7 +67,7 @@ public class OrderItemController {
             orderItemService.save(orderItem);
             return ResponseEntity.status(HttpStatus.CREATED).build();
         } catch (Exception e) {
-            System.out.println("Error occurred while creating order item: " + e.getMessage());
+            System.err.println("Error occurred while creating order item: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
@@ -85,7 +85,7 @@ public class OrderItemController {
         } catch (ResponseStatusException e) {
             throw e;
         } catch (Exception e) {
-            System.out.println("Error occurred while updating order item: " + e.getMessage());
+            System.err.println("Error occurred while updating order item: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
@@ -103,7 +103,7 @@ public class OrderItemController {
         } catch (ResponseStatusException e) {
             throw e;
         } catch (Exception e) {
-            System.out.println("Error occurred while deleting order item: " + e.getMessage());
+            System.err.println("Error occurred while deleting order item: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }

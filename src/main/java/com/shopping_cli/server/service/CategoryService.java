@@ -1,7 +1,6 @@
 package com.shopping_cli.server.service;
 
 import com.shopping_cli.server.model.Category;
-import com.shopping_cli.server.model.OrderItem;
 import com.shopping_cli.server.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,23 +14,47 @@ public class CategoryService {
     private CategoryRepository categoryRepository;
 
     public List<Category> findAll() {
-        return categoryRepository.findAll();
+        try {
+            return categoryRepository.findAll();
+        } catch (Exception e) {
+            System.err.println("Failed to retrieve all categories: " + e.getMessage());
+            throw e;
+        }
     }
 
     public Optional<Category> findById(int id) {
-        return categoryRepository.findById(id);
+        try {
+            return categoryRepository.findById(id);
+        } catch (Exception e) {
+            System.err.println("Failed to find category by ID: " + id + ", Error: " + e.getMessage());
+            throw e;
+        }
     }
 
     public boolean existsById(int id) {
-        return categoryRepository.existsById(id);
+        try {
+            return categoryRepository.existsById(id);
+        } catch (Exception e) {
+            System.err.println("Failed to check if category exists by ID: " + id + ", Error: " + e.getMessage());
+            throw e;
+        }
     }
 
     public void save(Category category) {
-        categoryRepository.save(category);
+        try {
+            categoryRepository.save(category);
+        } catch (Exception e) {
+            System.err.println("Failed to save category: " + category + ", Error: " + e.getMessage());
+            throw e;
+        }
     }
 
     public void deleteById(int id) {
-        categoryRepository.deleteById(id);
+        try {
+            categoryRepository.deleteById(id);
+        } catch (Exception e) {
+            System.err.println("Failed to delete category by ID: " + id + ", Error: " + e.getMessage());
+            throw e;
+        }
     }
-
 }

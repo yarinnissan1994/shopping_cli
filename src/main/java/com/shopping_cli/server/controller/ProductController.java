@@ -22,14 +22,13 @@ public class ProductController {
 
     @Autowired
     private CategoryService categoryService;
-
     @GetMapping("")
     public ResponseEntity<List<Product>> getAllProducts() {
         try {
             List<Product> products = productService.findAll();
             return ResponseEntity.ok(products);
         } catch (Exception e) {
-            System.out.println("Error occurred while retrieving products: " + e.getMessage());
+            System.err.println("Error occurred while retrieving products: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
@@ -43,7 +42,7 @@ public class ProductController {
         } catch (ResponseStatusException e) {
             throw e;
         } catch (Exception e) {
-            System.out.println("Error occurred while retrieving product: " + e.getMessage());
+            System.err.println("Error occurred while retrieving product: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
@@ -59,7 +58,7 @@ public class ProductController {
             productService.save(product);
             return ResponseEntity.status(HttpStatus.CREATED).build();
         } catch (Exception e) {
-            System.out.println("Error occurred while creating product: " + e.getMessage());
+            System.err.println("Error occurred while creating product: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
@@ -77,7 +76,7 @@ public class ProductController {
         } catch (ResponseStatusException e) {
             throw e;
         } catch (Exception e) {
-            System.out.println("Error occurred while updating product: " + e.getMessage());
+            System.err.println("Error occurred while updating product: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
@@ -95,7 +94,7 @@ public class ProductController {
         } catch (ResponseStatusException e) {
             throw e;
         } catch (Exception e) {
-            System.out.println("Error occurred while deleting product: " + e.getMessage());
+            System.err.println("Error occurred while deleting product: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }

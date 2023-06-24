@@ -23,7 +23,7 @@ public class CartController {
             List<Product> cart = cartService.getCart(session);
             return ResponseEntity.ok(cart);
         } catch (Exception e) {
-            System.out.println("Error occurred while getting current cart: " + e.getMessage());
+            System.err.println("Error occurred while getting current cart: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
@@ -34,7 +34,7 @@ public class CartController {
             cartService.clearCart(session);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
-            System.out.println("Error occurred while clearing cart: " + e.getMessage());
+            System.err.println("Error occurred while clearing cart: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
@@ -45,7 +45,7 @@ public class CartController {
             double total = cartService.getTotal(session);
             return ResponseEntity.ok(total);
         } catch (Exception e) {
-            System.out.println("Error occurred while calculating total: " + e.getMessage());
+            System.err.println("Error occurred while calculating total: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
@@ -56,7 +56,7 @@ public class CartController {
             cartService.addToCart(session, product);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
-            System.out.println("Error occurred while adding product to cart: " + e.getMessage());
+            System.err.println("Error occurred while adding product to cart: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
@@ -67,7 +67,7 @@ public class CartController {
             cartService.removeFromCart(session, productId);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
-            System.out.println("Error occurred while removing product from cart: " + e.getMessage());
+            System.err.println("Error occurred while removing product from cart: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }

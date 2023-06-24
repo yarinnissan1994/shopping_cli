@@ -2,15 +2,14 @@ package com.shopping_cli.server.controller;
 
 import com.shopping_cli.server.model.User;
 import com.shopping_cli.server.service.UserService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import jakarta.servlet.http.HttpSession;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/users")
@@ -25,7 +24,7 @@ public class UserController {
             List<User> users = userService.findAll();
             return ResponseEntity.ok(users);
         } catch (Exception e) {
-            System.out.println("Error occurred while retrieving users: " + e.getMessage());
+            System.err.println("Error occurred while retrieving users: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
@@ -39,7 +38,7 @@ public class UserController {
         } catch (ResponseStatusException e) {
             throw e;
         } catch (Exception e) {
-            System.out.println("Error occurred while retrieving user: " + e.getMessage());
+            System.err.println("Error occurred while retrieving user: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
@@ -56,7 +55,7 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.CREATED)
                     .body("User created successfully");
         } catch (Exception e) {
-            System.out.println("Error occurred while creating user: " + e.getMessage());
+            System.err.println("Error occurred while creating user: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
@@ -74,7 +73,7 @@ public class UserController {
         } catch (ResponseStatusException e) {
             throw e;
         } catch (Exception e) {
-            System.out.println("Error occurred while updating user: " + e.getMessage());
+            System.err.println("Error occurred while updating user: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
@@ -92,7 +91,7 @@ public class UserController {
         } catch (ResponseStatusException e) {
             throw e;
         } catch (Exception e) {
-            System.out.println("Error occurred while deleting user: " + e.getMessage());
+            System.err.println("Error occurred while deleting user: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
@@ -110,7 +109,7 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.CREATED)
                     .body("User created successfully");
         } catch (Exception e) {
-            System.out.println("Error occurred while registering user: " + e.getMessage());
+            System.err.println("Error occurred while registering user: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
@@ -126,7 +125,7 @@ public class UserController {
                 return ResponseEntity.status(HttpStatus.ACCEPTED)
                         .body("Successfully logged in");
         } catch (Exception e) {
-            System.out.println("Error occurred while logging in: " + e.getMessage());
+            System.err.println("Error occurred while logging in: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
@@ -137,7 +136,7 @@ public class UserController {
             session.invalidate();
             return ResponseEntity.status(HttpStatus.OK).body("Successfully logged out");
         } catch (Exception e) {
-            System.out.println("Error occurred while logging out: " + e.getMessage());
+            System.err.println("Error occurred while logging out: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
@@ -148,7 +147,7 @@ public class UserController {
             User user = userService.getCurrentUser(session);
             return ResponseEntity.ok(user);
         } catch (Exception e) {
-            System.out.println("Error occurred while retrieving current user: " + e.getMessage());
+            System.err.println("Error occurred while retrieving current user: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }

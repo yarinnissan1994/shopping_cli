@@ -24,7 +24,7 @@ public class CategoryController {
             List<Category> categories = categoryService.findAll();
             return ResponseEntity.ok(categories);
         } catch (Exception e) {
-            System.out.println("Error occurred while retrieving categories: " + e.getMessage());
+            System.err.println("Error occurred while retrieving categories: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
@@ -38,7 +38,7 @@ public class CategoryController {
         } catch (ResponseStatusException e) {
             throw e;
         } catch (Exception e) {
-            System.out.println("Error occurred while retrieving category: " + e.getMessage());
+            System.err.println("Error occurred while retrieving category: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
@@ -50,7 +50,7 @@ public class CategoryController {
             categoryService.save(category);
             return ResponseEntity.status(HttpStatus.CREATED).build();
         } catch (Exception e) {
-            System.out.println("Error occurred while creating category: " + e.getMessage());
+            System.err.println("Error occurred while creating category: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
@@ -68,7 +68,7 @@ public class CategoryController {
         } catch (ResponseStatusException e) {
             throw e;
         } catch (Exception e) {
-            System.out.println("Error occurred while updating category: " + e.getMessage());
+            System.err.println("Error occurred while updating category: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
@@ -86,7 +86,7 @@ public class CategoryController {
         } catch (ResponseStatusException e) {
             throw e;
         } catch (Exception e) {
-            System.out.println("Error occurred while deleting category: " + e.getMessage());
+            System.err.println("Error occurred while deleting category: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }

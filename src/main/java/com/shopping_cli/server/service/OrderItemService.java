@@ -14,23 +14,48 @@ public class OrderItemService {
     private OrderItemRepository orderItemRepo;
 
     public List<OrderItem> findAll() {
-        return orderItemRepo.findAll();
+        try {
+            return orderItemRepo.findAll();
+        } catch (Exception e) {
+            System.err.println("Error occurred while retrieving all order items: " + e.getMessage());
+            throw e;
+        }
     }
 
     public Optional<OrderItem> findById(int id) {
-        return orderItemRepo.findById(id);
+        try {
+            return orderItemRepo.findById(id);
+        } catch (Exception e) {
+            System.err.println("Error occurred while retrieving order item with ID " + id + ": " + e.getMessage());
+            throw e;
+        }
     }
 
     public boolean existsById(int id) {
-        return orderItemRepo.existsById(id);
+        try {
+            return orderItemRepo.existsById(id);
+        } catch (Exception e) {
+            System.err.println("Error occurred while checking existence of order item with ID " + id + ": " + e.getMessage());
+            throw e;
+        }
     }
 
     public void save(OrderItem orderItem) {
-        orderItemRepo.save(orderItem);
+        try {
+            orderItemRepo.save(orderItem);
+        } catch (Exception e) {
+            System.err.println("Error occurred while saving order item: " + e.getMessage());
+            throw e;
+        }
     }
 
     public void deleteById(int id) {
-        orderItemRepo.deleteById(id);
+        try {
+            orderItemRepo.deleteById(id);
+        } catch (Exception e) {
+            System.err.println("Error occurred while deleting order item with ID " + id + ": " + e.getMessage());
+            throw e;
+        }
     }
-
 }
+

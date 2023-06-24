@@ -14,22 +14,47 @@ public class OrderService {
     private OrderRepository orderRepo;
 
     public List<Order> findAll() {
-        return orderRepo.findAll();
+        try {
+            return orderRepo.findAll();
+        } catch (Exception e) {
+            System.err.println("Error occurred while retrieving all orders: " + e.getMessage());
+            throw e;
+        }
     }
 
     public Optional<Order> findById(int id) {
-        return orderRepo.findById(id);
+        try {
+            return orderRepo.findById(id);
+        } catch (Exception e) {
+            System.err.println("Error occurred while retrieving order with ID " + id + ": " + e.getMessage());
+            throw e;
+        }
     }
 
     public boolean existsById(int id) {
-        return orderRepo.existsById(id);
+        try {
+            return orderRepo.existsById(id);
+        } catch (Exception e) {
+            System.err.println("Error occurred while checking existence of order with ID " + id + ": " + e.getMessage());
+            throw e;
+        }
     }
 
     public void save(Order order) {
-        orderRepo.save(order);
+        try {
+            orderRepo.save(order);
+        } catch (Exception e) {
+            System.err.println("Error occurred while saving order: " + e.getMessage());
+            throw e;
+        }
     }
 
     public void deleteById(int id) {
-        orderRepo.deleteById(id);
+        try {
+            orderRepo.deleteById(id);
+        } catch (Exception e) {
+            System.err.println("Error occurred while deleting order with ID " + id + ": " + e.getMessage());
+            throw e;
+        }
     }
 }
