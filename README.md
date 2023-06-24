@@ -24,6 +24,8 @@
 
 ## 📖 Usage Instructions
 ...
+
+🧪
 ### <a name="Running Tests"></a>Running Tests
 
 ...
