@@ -22,7 +22,7 @@
 ## ⚙️ Configuration
 ...
 
-## 📖 Usage Instructions
+# 📖 Usage Instructions
 ...
 
 
