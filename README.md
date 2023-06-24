@@ -10,10 +10,10 @@
 
 ...
 
-## ⚡ Features
+### ⚡ Features
 ...
 
-## 🛠️ Technologies Used
+### 🛠️ Technologies Used
 ...
 
 ## 🔧 Installation
