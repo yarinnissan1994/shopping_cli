@@ -36,11 +36,12 @@ You can install and run the Shopping CLI either natively or through Docker. Plea
 
 ## 🖥️ Native Installation
 1. Clone the repository: `git clone https://github.com/yarinnissan1994/shopping_cli_client.git`
-2. Navigate to the project directory: `cd shopping_cli_client`
-3. Restore the required dependencies: `mvn clean install`
-4. Build the app: `mvn package`
-5. Navigate to the execution directory: `cd target`
-6. Start the application: `java -jar shopping_cli.jar`
+2.Clone the repository: `git clone https://github.com/yarinnissan1994/shopping_cli_Server.git` 
+3. Navigate to the project directory: `cd shopping_cli_client`
+4. Restore the required dependencies: `mvn clean install`
+5. Build the app: `mvn package`
+6. Navigate to the execution directory: `cd target`
+7. Start the application: `java -jar shopping_cli.jar`
 
 ## 🐳 Docker Installation
 1. Make sure Docker is up and running on your machine.
