@@ -14,7 +14,6 @@ import java.util.List;
 @RequestMapping("/api/categories")
 @CrossOrigin
 public class CategoryController {
-
     @Autowired
     private CategoryService categoryService;
 
@@ -43,7 +42,6 @@ public class CategoryController {
         }
     }
 
-    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("")
     public ResponseEntity<Void> createCategory(@RequestBody Category category) {
         try {
@@ -55,7 +53,6 @@ public class CategoryController {
         }
     }
 
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/{id}")
     public ResponseEntity<Void> updateCategory(@PathVariable int id, @RequestBody Category category) {
         try {
@@ -73,7 +70,6 @@ public class CategoryController {
         }
     }
 
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCategory(@PathVariable int id) {
         try {

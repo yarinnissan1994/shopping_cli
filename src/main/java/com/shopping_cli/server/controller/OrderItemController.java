@@ -53,7 +53,6 @@ public class OrderItemController {
         }
     }
 
-    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("")
     public ResponseEntity<Void> createOrderItem(@RequestBody OrderItem orderItem) {
         try {
@@ -72,7 +71,6 @@ public class OrderItemController {
         }
     }
 
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/{id}")
     public ResponseEntity<Void> updateOrderItem(@PathVariable int id, @RequestBody OrderItem orderItem) {
         try {
@@ -90,7 +88,6 @@ public class OrderItemController {
         }
     }
 
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteOrderItem(@PathVariable int id) {
         try {

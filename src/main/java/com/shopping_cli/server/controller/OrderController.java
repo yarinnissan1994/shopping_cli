@@ -48,7 +48,6 @@ public class OrderController {
         }
     }
 
-    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("")
     public ResponseEntity<Void> createOrder(@RequestBody Order order) {
         try {
@@ -64,7 +63,6 @@ public class OrderController {
         }
     }
 
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/{id}")
     public ResponseEntity<Void> updateOrder(@PathVariable int id, @RequestBody Order order) {
         try {
@@ -82,7 +80,6 @@ public class OrderController {
         }
     }
 
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteOrder(@PathVariable int id) {
         try {

@@ -112,6 +112,7 @@ public class UserService {
                 user = userRepo.findByEmail(userEmail);
                 session.setAttribute(USER_SESSION_ATTRIBUTE, user);
             }
+            System.out.println("session attribute: " + (User) session.getAttribute("user"));
             return user;
         } catch (Exception e) {
             System.err.println("Error occurred while getting or creating user session: " + e.getMessage());

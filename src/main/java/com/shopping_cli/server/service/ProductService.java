@@ -1,5 +1,6 @@
 package com.shopping_cli.server.service;
 
+import com.shopping_cli.server.model.Category;
 import com.shopping_cli.server.model.Product;
 import com.shopping_cli.server.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,4 +58,49 @@ public class ProductService {
             throw e;
         }
     }
+
+    public List<Product> findByCategory(Category category) {
+        try {
+            return productRepo.findByCategory(category);
+        } catch (Exception e) {
+            System.err.println("Error occurred while retrieving products by category: " + e.getMessage());
+            throw e;
+        }
+    }
+
+//    public List<Product> findAllSortedByName() {
+//        try {
+//            return productRepo.findAllSortedByName();
+//        } catch (Exception e) {
+//            System.err.println("Error occurred while retrieving all products sorted by name: " + e.getMessage());
+//            throw e;
+//        }
+//    }
+
+//    public List<Product> findAllSortedByItemAmount() {
+//        try {
+//            return productRepo.findAllSortedByPrice();
+//        } catch (Exception e) {
+//            System.err.println("Error occurred while retrieving all products sorted by item amount: " + e.getMessage());
+//            throw e;
+//        }
+//    }
+
+//    public List<Product> findByKeyword(String keyword) {
+//        try {
+//            return productRepo.findByKeyword(keyword);
+//        } catch (Exception e) {
+//            System.err.println("Error occurred while retrieving products by keyword: " + e.getMessage());
+//            throw e;
+//        }
+//    }
+
+//    public List<Product> findAllSortedByPrice() {
+//        try {
+//            return productRepo.findAllSortedByPrice();
+//        } catch (Exception e) {
+//            System.err.println("Error occurred while retrieving all products sorted by price: " + e.getMessage());
+//            throw e;
+//        }
+//    }
 }

@@ -1,5 +1,6 @@
 package com.shopping_cli.server.service;
 
+import com.shopping_cli.server.model.OrderItem;
 import com.shopping_cli.server.model.Product;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Service;
@@ -11,11 +12,11 @@ import java.util.List;
 public class CartService {
     private static final String CART_SESSION_ATTRIBUTE = "cart";
 
-    public void addToCart(HttpSession session, Product product) {
+    public void addToCart(HttpSession session, OrderItem product) {
         try {
-            List<Product> cartProducts = getOrCreateCartSession(session);
+            List<OrderItem> cartProducts = getOrCreateCartSession(session);
             cartProducts.add(product);
-            System.out.println("Product added to cart: " + product.getName());
+            System.out.println("Product added to cart!");
         } catch (Exception e) {
             System.err.println("Error occurred while adding product to cart: " + e.getMessage());
             throw e;
@@ -24,7 +25,7 @@ public class CartService {
 
     public void removeFromCart(HttpSession session, int productId) {
         try {
-            List<Product> cartProducts = getOrCreateCartSession(session);
+            List<OrderItem> cartProducts = getOrCreateCartSession(session);
             cartProducts.removeIf(product -> product.getId() == productId);
             System.out.println("Product removed from cart: ID " + productId);
         } catch (Exception e) {
@@ -33,7 +34,7 @@ public class CartService {
         }
     }
 
-    public List<Product> getCart(HttpSession session) {
+    public List<OrderItem> getCart(HttpSession session) {
         return getOrCreateCartSession(session);
     }
 
@@ -47,7 +48,7 @@ public class CartService {
         }
     }
 
-    public void updateCart(HttpSession session, List<Product> cartProducts) {
+    public void updateCart(HttpSession session, List<OrderItem> cartProducts) {
         try {
             session.setAttribute(CART_SESSION_ATTRIBUTE, cartProducts);
             System.err.println("Cart updated");
@@ -57,16 +58,16 @@ public class CartService {
         }
     }
 
-    public void updateCart(HttpSession session, Product product) {
+    public void updateCart(HttpSession session, OrderItem product) {
         try {
-            List<Product> cartProducts = getOrCreateCartSession(session);
+            List<OrderItem> cartProducts = getOrCreateCartSession(session);
             int index = findProductIndexInCart(cartProducts, product.getId());
             if (index != -1) {
                 cartProducts.set(index, product);
                 System.out.println("Product updated in cart: ID " + product.getId());
             } else {
                 cartProducts.add(product);
-                System.err.println("Product added to cart: " + product.getName());
+                System.err.println("Product added to cart!");
             }
         } catch (Exception e) {
             System.err.println("Error occurred while updating cart with product: " + e.getMessage());
@@ -76,10 +77,10 @@ public class CartService {
 
     public double getTotal(HttpSession session) {
         try {
-            List<Product> cartProducts = getOrCreateCartSession(session);
+            List<OrderItem> cartProducts = getOrCreateCartSession(session);
             double total = 0;
-            for (Product product : cartProducts) {
-                total += product.getPrice();
+            for (OrderItem product : cartProducts) {
+                total += product.getItemAmount();
             }
             return total;
         } catch (Exception e) {
@@ -88,9 +89,9 @@ public class CartService {
         }
     }
 
-    private List<Product> getOrCreateCartSession(HttpSession session) {
+    private List<OrderItem> getOrCreateCartSession(HttpSession session) {
         try {
-            List<Product> cartProducts = (List<Product>) session.getAttribute(CART_SESSION_ATTRIBUTE);
+            List<OrderItem> cartProducts = (List<OrderItem>) session.getAttribute(CART_SESSION_ATTRIBUTE);
             if (cartProducts == null) {
                 cartProducts = new ArrayList<>();
                 session.setAttribute(CART_SESSION_ATTRIBUTE, cartProducts);
@@ -102,7 +103,16 @@ public class CartService {
         }
     }
 
-    private int findProductIndexInCart(List<Product> cartProducts, int productId) {
+    public void replaceListWithUpdatedList(HttpSession session, List<OrderItem> orderItems) {
+        try {
+            session.setAttribute(CART_SESSION_ATTRIBUTE, orderItems);
+        } catch (Exception e) {
+            System.err.println("Error occurred while replacing list with updated list: " + e.getMessage());
+            throw e;
+        }
+    }
+
+    private int findProductIndexInCart(List<OrderItem> cartProducts, int productId) {
         try {
             for (int i = 0; i < cartProducts.size(); i++) {
                 if (cartProducts.get(i).getId() == productId) {
@@ -115,5 +125,6 @@ public class CartService {
             throw e;
         }
     }
+
 }
 

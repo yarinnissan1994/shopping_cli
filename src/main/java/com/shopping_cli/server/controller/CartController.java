@@ -1,5 +1,6 @@
 package com.shopping_cli.server.controller;
 
+import com.shopping_cli.server.model.OrderItem;
 import com.shopping_cli.server.model.Product;
 import com.shopping_cli.server.service.CartService;
 import jakarta.servlet.http.HttpSession;
@@ -18,9 +19,9 @@ public class CartController {
     private CartService cartService;
 
     @GetMapping("")
-    public ResponseEntity<List<Product>> getCurrentCart(HttpSession session) {
+    public ResponseEntity<List<OrderItem>> getCurrentCart(HttpSession session) {
         try {
-            List<Product> cart = cartService.getCart(session);
+            List<OrderItem> cart = cartService.getCart(session);
             return ResponseEntity.ok(cart);
         } catch (Exception e) {
             System.err.println("Error occurred while getting current cart: " + e.getMessage());
@@ -50,10 +51,10 @@ public class CartController {
         }
     }
 
-    @PostMapping
-    public ResponseEntity<Void> addProductToCart(@RequestBody Product product, HttpSession session) {
+    @PostMapping("")
+    public ResponseEntity<Void> addProductToCart(@RequestBody OrderItem orderItem, HttpSession session) {
         try {
-            cartService.addToCart(session, product);
+            cartService.addToCart(session, orderItem);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
             System.err.println("Error occurred while adding product to cart: " + e.getMessage());
@@ -61,10 +62,21 @@ public class CartController {
         }
     }
 
-    @DeleteMapping("/{productId}")
-    public ResponseEntity<Void> removeProductFromCart(@PathVariable int productId, HttpSession session) {
+    @PutMapping("")
+    public ResponseEntity<Object> replaceListWithUpdatedList (@RequestBody List<OrderItem> orderItems, HttpSession session) {
         try {
-            cartService.removeFromCart(session, productId);
+            cartService.replaceListWithUpdatedList(session, orderItems);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            System.err.println("Error occurred while replacing list with updated list: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @DeleteMapping("/{productId}")
+    public ResponseEntity<Void> removeProductFromCart(@PathVariable int orderItemId, HttpSession session) {
+        try {
+            cartService.removeFromCart(session, orderItemId);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
             System.err.println("Error occurred while removing product from cart: " + e.getMessage());

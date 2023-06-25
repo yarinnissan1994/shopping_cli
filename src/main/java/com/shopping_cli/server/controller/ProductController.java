@@ -22,11 +22,61 @@ public class ProductController {
 
     @Autowired
     private CategoryService categoryService;
+
     @GetMapping("")
     public ResponseEntity<List<Product>> getAllProducts() {
         try {
             List<Product> products = productService.findAll();
             return ResponseEntity.ok(products);
+        } catch (Exception e) {
+            System.err.println("Error occurred while retrieving products: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+//    @GetMapping("/sort/name")
+//    public ResponseEntity<List<Product>> getAllProductsSortedByName() {
+//        try {
+//            List<Product> products = productService.findAllSortedByName();
+//            return ResponseEntity.ok(products);
+//        } catch (Exception e) {
+//            System.err.println("Error occurred while retrieving products: " + e.getMessage());
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+//        }
+//    }
+//
+//    @GetMapping("/sort/price")
+//    public ResponseEntity<List<Product>> getAllProductsSortedByPrice() {
+//        try {
+//            List<Product> products = productService.findAllSortedByPrice();
+//            return ResponseEntity.ok(products);
+//        } catch (Exception e) {
+//            System.err.println("Error occurred while retrieving products: " + e.getMessage());
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+//        }
+//    }
+
+//    @GetMapping("/search/{keyword}")
+//    public ResponseEntity<List<Product>> getProductsByKeyword(@PathVariable String keyword) {
+//        try {
+//            List<Product> products = productService.findByKeyword(keyword);
+//            return ResponseEntity.ok(products);
+//        } catch (Exception e) {
+//            System.err.println("Error occurred while retrieving products: " + e.getMessage());
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+//        }
+//    }
+
+    @GetMapping("/category/{id}")
+    public ResponseEntity<List<Product>> getProductsByCategoryId(@PathVariable int id) {
+        try {
+            Optional<Category> category = categoryService.findById(id);
+            if (!category.isPresent())
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found!");
+            List<Product> products = productService.findByCategory(category.get());
+            return ResponseEntity.ok(products);
+        } catch (ResponseStatusException e) {
+            throw e;
         } catch (Exception e) {
             System.err.println("Error occurred while retrieving products: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -47,7 +97,6 @@ public class ProductController {
         }
     }
 
-    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("")
     public ResponseEntity<Void> createProduct(@RequestBody Product product) {
         try {
@@ -63,7 +112,6 @@ public class ProductController {
         }
     }
 
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/{id}")
     public ResponseEntity<Void> updateProduct(@PathVariable int id, @RequestBody Product product) {
         try {
@@ -81,7 +129,6 @@ public class ProductController {
         }
     }
 
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProduct(@PathVariable int id) {
         try {

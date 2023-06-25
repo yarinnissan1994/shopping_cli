@@ -60,7 +60,6 @@ public class UserController {
         }
     }
 
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/{id}")
     public ResponseEntity<Void> updateUser(@PathVariable int id, @RequestBody User user) {
         try {
@@ -78,7 +77,6 @@ public class UserController {
         }
     }
 
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable int id) {
         try {
@@ -100,10 +98,9 @@ public class UserController {
     public ResponseEntity<String> register(@RequestBody User user, HttpSession session) {
         try {
             if (userService.existsByEmail(user)) {
-                return ResponseEntity.status(HttpStatus.CONFLICT)
-                        .body("User already exists");
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .body("Email already exists");
             }
-
             userService.register(session, user);
 
             return ResponseEntity.status(HttpStatus.CREATED)
@@ -119,11 +116,10 @@ public class UserController {
         try {
             boolean userFound = userService.login(user.getEmail(), user.getPassword(), session);
             if (!userFound)
-                return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                        .body("Wrong email or password");
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .body("Invalid email or password");
             else
-                return ResponseEntity.status(HttpStatus.ACCEPTED)
-                        .body("Successfully logged in");
+                return ResponseEntity.ok("User logged in successfully");
         } catch (Exception e) {
             System.err.println("Error occurred while logging in: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
